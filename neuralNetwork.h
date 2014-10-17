@@ -12,9 +12,16 @@ class Neuron
 	public:
 	
 		unsigned int neuronId;
-		T *inputActivation;
+		
+		bool isInputLayerNeuron;
+		
+		if (isInputLayerNeuron)
+			T inputActivation;
+		
 		T outputResponse;
+		
 		list<Neuron*> forwardNeighborNeurons;
+		
 		list<Neuron*> backwardNeighborNeurons;
 		
 		Neuron()
@@ -30,11 +37,16 @@ class NeuralNetwork
 	public:
 	
 		list<Neuron*> inputLayer;
+		
 		Neuron** hiddenLayer; // in general there may be arbitrary number of hidden layers
+		
 		list<Neuron*> outputLayer;
 			
 		unsigned int nInputNeurons;
+		
 		unsigned int* nHiddenNeurons;
+		
 		unsigned int nOutputNeurons;
+		
 		unsigned int nHiddenLayers;
 };
