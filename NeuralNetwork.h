@@ -11,24 +11,20 @@ class Neuron
 {
 	public:
 	
-		unsigned int neuronId;
-		
-		bool isInputLayerNeuron;
-		
-		if (isInputLayerNeuron)
-			T inputActivation;
-		
+		unsigned int neuronId[2]; // assuming 2D neural networks
+		T *inputActivation;
 		T outputResponse;
-		
-		list<Neuron*> forwardNeighborNeurons;
-		
-		list<Neuron*> backwardNeighborNeurons;
+		//Neuron* forwardNeighborNeurons;
+		//Neuron* backwardNeighborNeurons;
 		
 		Neuron()
 		{
 			outputActivation = (class T) 0;
-		}
-		void computeActivation();	
+		}		
+
+		void computeActivation();
+		
+
 };
 
 // defines the generic neural network
@@ -36,17 +32,21 @@ class NeuralNetwork
 {
 	public:
 	
-		list<Neuron*> inputLayer;
-		
+		Neuron* inputLayer;
 		Neuron** hiddenLayer; // in general there may be arbitrary number of hidden layers
-		
-		list<Neuron*> outputLayer;
+		Neuron* outputLayer;
 			
 		unsigned int nInputNeurons;
-		
 		unsigned int* nHiddenNeurons;
-		
 		unsigned int nOutputNeurons;
-		
 		unsigned int nHiddenLayers;
+
+		T inputToHiddenConnectionWeights;
+		T hiddenToHiddenConnectionWeights;
+		T hiddenToOutputConnectionWeights;
+
+		void readTrainingData();
+		void extractFeatures(); 
+		void trainNetwork();
+		void testNetwork();
 };

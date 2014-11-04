@@ -18,7 +18,7 @@ class LinearNeuron : public Neuron
 
 
 
-class linearNeuronPerceptronNetwork : public NeuralNetwork
+class LinearNeuronPerceptronNetwork : public NeuralNetwork
 {
     
     void computeActivation()
