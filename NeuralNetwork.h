@@ -6,20 +6,19 @@ Classes defining generic structures for neural networks. These classes may later
 using namespace std;
 
 // defines neuron class
-template<class T>
+template<class SignalDataType>
 class Neuron
 {
 	public:
 	
 		unsigned int neuronId[2]; // assuming 2D neural networks
-		T *inputActivation;
-		T outputResponse;
-		//Neuron* forwardNeighborNeurons;
-		//Neuron* backwardNeighborNeurons;
+		SignalDataType *inputActivation;
+		SignalDataType outputResponse;
+		
 		
 		Neuron()
 		{
-			outputActivation = (class T) 0;
+			outputActivation = (class SignalDataType) 0;
 		}		
 
 		void computeActivation();
@@ -28,22 +27,23 @@ class Neuron
 };
 
 // defines the generic neural network
+template<class WeightDataType, class SignalDataType>
 class NeuralNetwork
 {
 	public:
 	
-		Neuron* inputLayer;
-		Neuron** hiddenLayer; // in general there may be arbitrary number of hidden layers
-		Neuron* outputLayer;
+		Neuron<SignalDataType>* inputLayer;
+		Neuron<SignalDataType>** hiddenLayer; 
+		Neuron<SignalDataType>* outputLayer;
 			
 		unsigned int nInputNeurons;
 		unsigned int* nHiddenNeurons;
 		unsigned int nOutputNeurons;
 		unsigned int nHiddenLayers;
 
-		T inputToHiddenConnectionWeights;
-		T hiddenToHiddenConnectionWeights;
-		T hiddenToOutputConnectionWeights;
+		WeightDataType** inputToHiddenConnectionWeights;
+		WeightDataType*** hiddenToHiddenConnectionWeights;
+		WeightDataType** hiddenToOutputConnectionWeights;
 
 		void readTrainingData();
 		void extractFeatures(); 
