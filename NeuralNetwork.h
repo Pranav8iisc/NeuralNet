@@ -93,6 +93,10 @@ void NeuralNetwork<WeightDataType, SignalDataType, DatasetReaderType>::trainNetw
 	switch(methodId):
 	{
 		case BACKPROP:
+			while (terminationCriteria != true)
+			{
+				for ()
+			}
 	}
 	
 			
