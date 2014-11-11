@@ -38,7 +38,6 @@ void NeuralNetworks::computeHiddenUnitResponse(Matrix *s, Matrix *h)
 
 	x = inputToHiddenLayerWeights * s + hiddenLayerBias;		
 	h = sigmoid(x);	
-
 }
 
 
@@ -58,12 +57,22 @@ void NeuralNetworks::computeOutputError(Matrix * o, Matrix *r, Matrix *error)
 }
 
 
-void NeuralNetworks::backpropogateError()
+void NeuralNetworks::backpropogateError(Matrix *errorHidden, Matrix *errorOutput)
 {
+	Matrix D = new Matrix(nOutputLayerNeurons, nOutputLayerNeurons);
+
+	for (unsigned int i = 0; i < nOutputLayerNeurons; i++)
+		for (unsigned int j = 0; j < nOutputLayerNeurons; j++)
+			D[i][j] = 0.0;
+		
+
+	for (unsigned int n = 0; n < nOutputLayerNeurons; n++)
+		D[n][n] = errorOutput[n];
+
 	errorHidden = transpose(hiddenToOutputLayerWeight) * D * errorOutput;	
 }
 
-void updateWeightsAndBiases()
+void updateWeightsAndBiases(Matrix *errorHidden, Matrix *errorOutput)
 {
 
 
@@ -107,6 +116,8 @@ void NeuralNetworks::trainNetwork()
 	{
 
 		Matrix *h = new Matrix(nHiddenLayerNeurons[0]);
+		Matrix *errorHidden = new Matrix(nHiddenLayerNeurons[0]);
+		Matrix *errorOutput = new Matrix(nOutputLayerNeurons[0]);
 
 		inputToHiddenLayerWeights = new Matrix(nHiddenLayerNeurons[0], nInputLayerNeurons);
 		hiddenToOutputLayerWeights = new Matrix(nOutputLayerNeurons, nHiddenLayerNeuwons[0]);
@@ -131,8 +142,8 @@ void NeuralNetworks::trainNetwork()
 			computeHiddenLayerResponse(s, h);
 			computeOutputLayerResponse(h, r);			
 			computeOutputError(o, r, averageOutputError);
-			backpropogateError();
-			updateWeightsAndBiases();
+			backpropogateError(errorHidden,errorOutput);
+			updateWeightsAndBiases(errorHidden, errorOutput);
 		}
 	}	
 
