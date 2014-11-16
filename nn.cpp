@@ -74,15 +74,15 @@ void NeuralNetworks::backpropogateError(Matrix *errorHidden, Matrix *errorOutput
 
 void updateWeightsAndBiases(Matrix *errorHidden, Matrix *errorOutput)
 {
-
-
+	hiddenToOutputLayerWeights = hiddenToOutputLayerWeights + gamma * Dr[][] * errorOutput * h();
+	inputToHiddenLayerWeights = inputToHiddenLayerWeights + gamma * Dh[][] * errorHidden * s();
+	
+	hiddenWeights = hiddenWeight + gamma * Dh[][] * errorHidden;
+	outputWeights = outputWeight + gamma * Dr[][] * errorOutput;
 }
 
 void NeuralNetworks::trainNetwork()
 {
-
-
-	
 	cout << "\nPlease enter number of input layer neurons:";
 	cin >> nInputLayerNeurons;
 
